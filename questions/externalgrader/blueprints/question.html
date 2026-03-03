@@ -1,0 +1,29 @@
+<pl-question-panel>
+  <script src="https://cdn.jsdelivr.net/npm/litegraph.js/build/litegraph.min.js"></script>
+
+  <script>
+    const initialGraph = {{{ params.initial_graph }}};
+    const STORAGE_KEY = "{{{ params.storage_key }}}";
+  </script>
+
+  <pl-string-input answers-name="student_graph" size="80" display="block" allow-blank="true"></pl-string-input>
+
+  {{defer statement ensures DOM has loaded before javascript; code doesn't work otherwise}}
+  <script src="{{ options.client_files_question_url }}/graph.js" defer> </script>
+
+  <h3>Blueprint Graph Prototype</h3>
+
+  <div id="graph-container"
+      style="width:100%; height:600px; background:#1e1e1e;">
+  </div>
+
+  
+
+</pl-question-panel>
+
+
+
+<pl-submission-panel>
+  <pl-external-grader-results></pl-external-grader-results>
+  <pl-file-preview></pl-file-preview>
+</pl-submission-panel>
