@@ -119,9 +119,7 @@
   function PrintNode() {
       BlueprintNode.call(this);
       this.title = "Print String";
-      this.addInput("Exec", LiteGraph.EVENT);
-      this.addInput("In String", "string");
-      this.addOutput("Then", LiteGraph.EVENT);
+      this.addInput("Text", LiteGraph.EVENT);
   }
   PrintNode.title = "Print String";
   PrintNode.prototype = Object.create(BlueprintNode.prototype);
