@@ -6,18 +6,29 @@
     const STORAGE_KEY = "{{{ params.storage_key }}}";
   </script>
 
-  <pl-string-input answers-name="student_graph" size="80" display="block" allow-blank="true"></pl-string-input>
+  
 
-  {{defer statement ensures DOM has loaded before javascript; code doesn't work otherwise}}
+  <script src="{{ options.client_files_question_url }}/blueprintnode.js"> </script>
+
+  {{This script segement loads all the nodetypes defined in nodetype.py into graph.js}}
+  <script>
+    {{{ params.node_registration_js }}}
+  </script>
+  
   <script src="{{ options.client_files_question_url }}/graph.js" defer> </script>
 
-  <h3>Blueprint Graph Prototype</h3>
+  {{defer statement ensures DOM has loaded before javascript; code doesn't work otherwise}}
+  <script src="{{ options.client_files_question_url }}/main.js" defer> </script>
 
+  <h3>Blueprint Graph Prototype</h3>
+  <pl-string-input answers-name="student_graph" size="80" display="block" allow-blank="true" ></pl-string-input>
   <div id="graph-container"
       style="width:100%; height:600px; background:#1e1e1e;">
   </div>
 
-  
+<button type="button" id="reset-graph" class="btn btn-secondary">
+  Reset Graph
+</button>
 
 </pl-question-panel>
 
@@ -25,5 +36,4 @@
 
 <pl-submission-panel>
   <pl-external-grader-results></pl-external-grader-results>
-  <pl-file-preview></pl-file-preview>
 </pl-submission-panel>
