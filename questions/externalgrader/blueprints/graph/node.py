@@ -8,8 +8,8 @@ class Node:
         # Auto-populate inputs/outputs from node type
         if type_name in NODE_TYPES:
             node_type = NODE_TYPES[type_name]
-            self.inputs = [name for name, _, _ in node_type.inputs]
-            self.outputs = [name for name, _, _ in node_type.outputs]
+            self.inputs = [name for name, _ in node_type.inputs]
+            self.outputs = [name for name, _ in node_type.outputs]
         else:
             self.inputs = []
             self.outputs = []

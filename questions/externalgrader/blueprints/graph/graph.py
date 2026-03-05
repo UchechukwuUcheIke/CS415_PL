@@ -1,6 +1,5 @@
 from graph.link import Link
 from graph.node import Node
-from graph.pin import Pin
 
 class Graph:
     def __init__(self):

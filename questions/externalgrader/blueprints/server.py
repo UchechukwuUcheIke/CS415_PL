@@ -26,14 +26,8 @@ def generate(data):
     data["params"]["node_registration_js"] = generate_litegraph_registration_js()
 
 def grade(data):
-
-    print(data["submitted_answers"])
     student_graph_json = data["submitted_answers"]["student_graph"]
     student_graph = from_litegraph_json(json.loads(student_graph_json))
-
-    #TODO: Last thing: we need an effective way to compare the student graph with the actual graph
-    print(to_litegraph_json(graph))
-    print(student_graph_json)
     
     final_score = 1 if graphs_equal(student_graph, graph) else 0
     data["score"] = final_score

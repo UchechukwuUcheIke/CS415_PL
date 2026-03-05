@@ -17,4 +17,9 @@ container.appendChild(canvasEl);
 const graph = new LGraph();
 const canvas = new LGraphCanvas(canvasEl, graph);
 
+const MIN_ZOOM = 0.5;
+const MAX_ZOOM = 1.5;
+canvas.min_zoom = MIN_ZOOM;
+canvas.max_zoom = MAX_ZOOM;
+
 canvas.background_color = "#1e1e1e";
