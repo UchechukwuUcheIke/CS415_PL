@@ -6,8 +6,6 @@
     const STORAGE_KEY = "{{{ params.storage_key }}}";
   </script>
 
-  
-
   <script src="{{ options.client_files_question_url }}/blueprintnode.js"> </script>
 
   {{This script segement loads all the nodetypes defined in nodetype.py into graph.js}}
@@ -15,9 +13,8 @@
     {{{ params.node_registration_js }}}
   </script>
   
-  <script src="{{ options.client_files_question_url }}/graph.js" defer> </script>
-
   {{defer statement ensures DOM has loaded before javascript; code doesn't work otherwise}}
+  <script src="{{ options.client_files_question_url }}/graph.js" defer> </script>
   <script src="{{ options.client_files_question_url }}/main.js" defer> </script>
 
   <h3>Blueprint Graph Prototype</h3>

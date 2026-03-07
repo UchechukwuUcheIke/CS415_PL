@@ -1,3 +1,12 @@
+function ClearRegisteredNodes()
+{
+    LiteGraph.registered_node_types = {};
+    LiteGraph.node_types_by_file_extension = {};
+    LiteGraph.Nodes = {};
+}
+
+ClearRegisteredNodes();
+
 function BlueprintNode() {
     LGraphNode.call(this);
     this.size = [220, 120];

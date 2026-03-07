@@ -73,13 +73,18 @@ function createLinks(graphData, nodeMap) {
         originNode.connect(originSlot, targetNode, targetSlot);
     });
 }
-function buildGraphFromJSON(graphData) {
+
+function initializeGraph(graphData) {
     const success = loadSavedGraph();
     if (success)
     {
         return;
     }
 
+    buildGraphFromJSON(graphData);
+}
+
+function buildGraphFromJSON(graphData) {
     const nodeMap = {}; // backend id → actual node instance
     createNodes(graphData, nodeMap);
     createLinks(graphData, nodeMap);
@@ -99,21 +104,21 @@ function captureGraphState() {
     }
 }
 
-function resetGraph()
-{
-    graph.clear();
-    buildGraphFromJSON(initialGraph);
-    captureGraphState();
-}
-
 // Capture on any graph change
 graph.onNodeAdded = captureGraphState
 graph.onNodeRemoved = captureGraphState
 graph.onConnectionChange = captureGraphState
 
 document.addEventListener("DOMContentLoaded", function() {
-    buildGraphFromJSON(initialGraph);
+    initializeGraph(initialGraph);
 });
+
+function resetGraph()
+{
+    graph.clear();
+    buildGraphFromJSON(initialGraph);
+    captureGraphState();
+}
 
 document.getElementById("reset-graph").addEventListener("click", function() {
     resetGraph();
