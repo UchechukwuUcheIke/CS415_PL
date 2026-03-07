@@ -1,6 +1,6 @@
-from graph.graph import Graph, graphs_equal
-from graph.node import Node
-from graph.litegraph_utils import from_litegraph_json, to_litegraph_json, generate_litegraph_registration_js
+from blueprints.graph import Graph, graphs_equal
+from blueprints.node import Node
+from blueprints.litegraph_utils import from_litegraph_json, to_litegraph_json, generate_litegraph_registration_js
 import json
 
 def create_graph():

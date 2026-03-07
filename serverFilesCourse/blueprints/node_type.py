@@ -1,5 +1,5 @@
-from graph.pin_type import PIN_TYPES
-from graph.pin import Pin
+from blueprints.pin_type import PIN_TYPES
+from blueprints.pin import Pin
 
 class NodeType:
     def __init__(self, type_name, title, inputs, outputs, color = "#007777"):

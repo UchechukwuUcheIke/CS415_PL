@@ -7,5 +7,10 @@
     ],
     "type": "v3",
     "singleVariant": true,
-    "gradingMethod": "Internal"
+    "gradingMethod": "Internal",
+    "externalGradingOptions": {
+        "enabled": true,
+        "image": "prairielearn/grader-python",
+        "serverFilesCourse": ["graph"]
+    }
 }

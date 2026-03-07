@@ -1,6 +1,6 @@
-from graph.graph import Graph
-from graph.node import Node
-from graph.node_type import NODE_TYPES
+from blueprints.graph import Graph
+from blueprints.node import Node
+from blueprints.node_type import NODE_TYPES
 
 def to_litegraph_json(graph):
     litegraph_nodes = []
@@ -53,8 +53,6 @@ def to_litegraph_json(graph):
         ])
         
         # Register link in output slot
-        print(from_index)
-        print(from_slot)
         litegraph_nodes[from_index]["outputs"][from_slot]["links"].append(link_id)
         link_id += 1
     
@@ -67,6 +65,7 @@ def to_litegraph_json(graph):
     }
 
 def from_litegraph_json(litegraph):
+    # TODO: Add validation for litegraph json
     g = Graph()
     
     # Create nodes
@@ -117,6 +116,7 @@ def generate_litegraph_registration_js():
     """Generate JavaScript code to register all node types"""
     js_lines = []
 
+    js_lines.append(f"function initializeDynamicNodes(BlueprintNode) {{")
     for node_type in NODE_TYPES.values():
         func_name = node_type.type_name.replace("/", "_").title().replace("_", "")
         
@@ -160,4 +160,6 @@ def generate_litegraph_registration_js():
         js_lines.append(f"LiteGraph.registerNodeType('{node_type.type_name}', {func_name});")
         js_lines.append("")
     
+    js_lines.append("}")
+
     return "\n".join(js_lines)

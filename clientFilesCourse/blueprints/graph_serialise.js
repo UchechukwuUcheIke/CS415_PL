@@ -1,4 +1,6 @@
-function loadSavedGraph() {
+window.GraphSerialise = {}
+
+GraphSerialise.loadSavedGraph = function(graph) {
     // For whatever reason, session storage doesn't seem to persist between refreshes
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -11,7 +13,7 @@ function loadSavedGraph() {
     return false;
 }
 
-function createNodes(graphData, nodeMap) {
+GraphSerialise.createNodes = function(graph, graphData, nodeMap) {
     graphData.nodes.forEach(nodeData => {
         const node = LiteGraph.createNode(nodeData.type);
 
@@ -51,7 +53,7 @@ function createNodes(graphData, nodeMap) {
     });
 }
 
-function createLinks(graphData, nodeMap) {
+GraphSerialise.createLinks = function(graph, graphData, nodeMap) {
     graphData.links.forEach(link => {
 
         const [
@@ -74,24 +76,24 @@ function createLinks(graphData, nodeMap) {
     });
 }
 
-function initializeGraph(graphData) {
-    const success = loadSavedGraph();
+GraphSerialise.initializeGraph = function(graph, graphData) {
+    const success = GraphSerialise.loadSavedGraph(graph);
     if (success)
     {
         return;
     }
 
-    buildGraphFromJSON(graphData);
+    GraphSerialise.buildGraphFromJSON(graph, graphData);
 }
 
-function buildGraphFromJSON(graphData) {
+GraphSerialise.buildGraphFromJSON = function(graph, graphData) {
     const nodeMap = {}; // backend id → actual node instance
-    createNodes(graphData, nodeMap);
-    createLinks(graphData, nodeMap);
+    GraphSerialise.createNodes(graph, graphData, nodeMap);
+    GraphSerialise.createLinks(graph, graphData, nodeMap);
     graph.start();
 }
 
-function captureGraphState() {
+GraphSerialise.captureGraphState = function(graph) {
     const graphData = graph.serialize();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(graphData));
     console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
@@ -104,22 +106,10 @@ function captureGraphState() {
     }
 }
 
-// Capture on any graph change
-graph.onNodeAdded = captureGraphState
-graph.onNodeRemoved = captureGraphState
-graph.onConnectionChange = captureGraphState
-
-document.addEventListener("DOMContentLoaded", function() {
-    initializeGraph(initialGraph);
-});
-
-function resetGraph()
+function resetGraph(graph)
 {
     graph.clear();
-    buildGraphFromJSON(initialGraph);
-    captureGraphState();
+    GraphSerialise.buildGraphFromJSON(graph, initialGraph);
+    GraphSerialise.captureGraphState(graph);
 }
 
-document.getElementById("reset-graph").addEventListener("click", function() {
-    resetGraph();
-});

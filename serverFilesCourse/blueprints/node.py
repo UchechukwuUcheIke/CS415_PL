@@ -1,4 +1,4 @@
-from graph.node_type import NodeType, NODE_TYPES
+from blueprints.node_type import NodeType, NODE_TYPES
 
 class Node:
     def __init__(self, id, type_name, x=0, y=0):

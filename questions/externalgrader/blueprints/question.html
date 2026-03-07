@@ -6,7 +6,7 @@
     const STORAGE_KEY = "{{{ params.storage_key }}}";
   </script>
 
-  <script src="{{ options.client_files_question_url }}/blueprintnode.js"> </script>
+  <script src="{{ options.client_files_course_url }}/blueprints/blueprintnode.js"> </script>
 
   {{This script segement loads all the nodetypes defined in nodetype.py into graph.js}}
   <script>
@@ -14,8 +14,10 @@
   </script>
   
   {{defer statement ensures DOM has loaded before javascript; code doesn't work otherwise}}
-  <script src="{{ options.client_files_question_url }}/graph.js" defer> </script>
-  <script src="{{ options.client_files_question_url }}/main.js" defer> </script>
+  <script src="{{ options.client_files_course_url }}/blueprints/graph_setup.js" defer> </script>
+  <script src="{{ options.client_files_course_url }}/blueprints/graph_serialise.js" defer> </script>
+  <script src="{{ options.client_files_course_url }}/blueprints/graph_events.js" defer> </script>
+  <script src="{{ options.client_files_course_url }}/blueprints/main.js" defer> </script>
 
   <h3>Blueprint Graph Prototype</h3>
   <pl-string-input answers-name="student_graph" size="80" display="block" allow-blank="true" ></pl-string-input>

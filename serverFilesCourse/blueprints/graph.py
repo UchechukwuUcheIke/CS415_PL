@@ -1,5 +1,5 @@
-from graph.link import Link
-from graph.node import Node
+from blueprints.link import Link
+from blueprints.node import Node
 
 class Graph:
     def __init__(self):
