@@ -1,0 +1,64 @@
+<pl-question-panel>
+  {{ Boilerplate }}
+  <script src="https://cdn.jsdelivr.net/npm/litegraph.js/build/litegraph.min.js"></script>
+  <script>
+    const initialGraph = {{{ params.initial_graph }}};
+    const STORAGE_KEY = "{{{ params.storage_key }}}";
+  </script>
+
+  <script src="{{ options.client_files_course_url }}/blueprints/blueprintnode.js"> </script>
+
+  {{This script segement allows server.py to inject javascript to the student's webpage.
+    Injected javascript contains the registered nodes for this question }}
+  <script>
+    {{{ params.node_registration_js }}}
+  </script>
+  
+  {{defer statement ensures DOM has loaded before javascript; code doesn't work otherwise}}
+  <script src="{{ options.client_files_course_url }}/blueprints/graph_setup.js" defer> </script>
+  <script src="{{ options.client_files_course_url }}/blueprints/graph_serialise.js" defer> </script>
+  <script src="{{ options.client_files_course_url }}/blueprints/graph_events.js" defer> </script>
+  <script src="{{ options.client_files_course_url }}/blueprints/main.js" defer> </script>
+
+  <h2>Problem 1 — Debugging a Blueprint</h2>
+
+  <p>
+  A developer created a simple Blueprint that should print a message when the game begins.
+  The Blueprint currently contains two nodes:
+  </p>
+
+  <ul>
+    <li><strong>Begin Play</strong></li>
+    <li><strong>Print String</strong></li>
+  </ul>
+
+  <p>
+  However, when the game starts, <strong>no message appears on the screen</strong>.
+  </p>
+
+  <p>
+  Your task is to determine what might be wrong with the Blueprint setup. Carefully examine how
+  execution flows between nodes in Unreal Engine Blueprints and perform the changes that would be
+  required to make the message appear when the game starts.
+  </p>
+
+
+  <div id="graph-container"
+      style="width:100%; height:600px; background:#1e1e1e;">
+  </div>
+
+  {{We wrap the string input around a "display:none" div so the student cannot see it}}
+  <div id="hidden-input" style="display:none;">
+    <pl-string-input answers-name="student_graph" size="80" display="block" allow-blank="true"></pl-string-input>
+  </div>
+  <button type="button" id="reset-graph" class="btn btn-secondary">
+    Reset Graph
+  </button>
+
+</pl-question-panel>
+
+
+
+<pl-submission-panel>
+  <pl-external-grader-results></pl-external-grader-results>
+</pl-submission-panel>

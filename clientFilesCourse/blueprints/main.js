@@ -1,5 +1,6 @@
 function main()
 {
+    GraphSetup.setUpLiteGraph();
     GraphSetup.clearRegisteredNodes();
     const BlueprintNodeObj = BlueprintNode.initializeBlueprintNode();
     initializeDynamicNodes(BlueprintNodeObj);

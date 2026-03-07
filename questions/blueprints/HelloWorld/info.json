@@ -1,0 +1,16 @@
+{
+    "uuid": "afbf0f7e-996e-466f-b8ef-d849ca871099",
+    "title": "Hello World",
+    "topic": "Blueprints",
+    "tags": [
+        "code"
+    ],
+    "type": "v3",
+    "singleVariant": true,
+    "gradingMethod": "Internal",
+    "externalGradingOptions": {
+        "enabled": true,
+        "image": "prairielearn/grader-python",
+        "serverFilesCourse": ["graph"]
+    }
+}

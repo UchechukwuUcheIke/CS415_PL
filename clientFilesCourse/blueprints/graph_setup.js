@@ -21,17 +21,21 @@ GraphSetup.createCanvas = function(graph)
 {
   const container = document.getElementById("graph-container");
   const canvasEl = document.createElement("canvas");
+  canvasEl.setAttribute('id', 'graph-canvas');
   canvasEl.width = container.clientWidth || 800;
   canvasEl.height = 600;
   container.appendChild(canvasEl);
 
   const canvas = new LGraphCanvas(canvasEl, graph);
 
-  return canvas
+  return { canvas, canvasEl }
 }
 
-GraphSetup.setCanvasColors = function(canvas)
+GraphSetup.setCanvasColors = function(graph, canvas)
 {
+  canvas.background_color = "#1e1e1e";
+
+  // NOTE: Only colors the link when newly connected currently
   const customLinkTypeColors = {
     event: "#ffffff",   // Exec wires (white)
     "string": "#ff77ff",  // String wires (magenta)
@@ -42,57 +46,56 @@ GraphSetup.setCanvasColors = function(canvas)
     "-1": "#999999"       // Wildcard / Any
   };
 
+  function colorizeLinks() {
+    for (const linkId in graph.links) {
+      const link = graph.links[linkId];
+      if (!link) continue;
+      link.color = customLinkTypeColors[link.type] ?? "#ff0000";
+    }
+  }
+
+  const originalDrawConnections = LGraphCanvas.prototype.drawConnections;
+  LGraphCanvas.prototype.drawConnections = function(ctx) {
+      colorizeLinks();
+      return originalDrawConnections.call(this, ctx);
+  };
+
+  Object.assign(LGraphCanvas.link_type_colors, customLinkTypeColors);
+
   canvas.default_connection_color_byType  = customLinkTypeColors
   canvas.default_connection_color_byTypeOff  = customLinkTypeColors
+
+  colorizeLinks();
 }
 
-GraphSetup.setCanvasZoom = function(canvas)
+GraphSetup.clampNodeMovement = function(canvasEl)
 {
-  const MIN_ZOOM = 0.5;
-  const MAX_ZOOM = 1.5;
-  canvas.min_zoom = MIN_ZOOM;
-  canvas.max_zoom = MAX_ZOOM;
+  const originalDraw = LGraphCanvas.prototype.draw;
+  LGraphCanvas.prototype.draw = function() {
+    if (this.graph) {
+      this.graph._nodes.forEach(node => {
+        node.pos[0] = Math.max(0, Math.min(canvasEl.width, node.pos[0]));
+        node.pos[1] = Math.max(0, Math.min(canvasEl.height, node.pos[1]));
+      });
+    }
+    return originalDraw.apply(this, arguments);
+  };
+}
 
-  canvas.background_color = "#1e1e1e";
+GraphSetup.setCanvasInteraction = function(canvas, canvasEl)
+{
   canvas.allow_searchbox = false;
-  // Disable zooming entirely
+  canvas.allow_dragnodes = true;
   canvas.allow_zoom = false;
-
-  // Disable panning entirely
   canvas.allow_dragcanvas = false;
+  GraphSetup.clampNodeMovement(canvasEl);
 }
 
 GraphSetup.setUpCanvas = function(graph)
 {
-  const canvas = GraphSetup.createCanvas(graph);
-  GraphSetup.setCanvasColors(canvas);
-  GraphSetup.setCanvasZoom(canvas);
+  const { canvas, canvasEl } = GraphSetup.createCanvas(graph);
+  GraphSetup.setCanvasColors(graph, canvas);
+  GraphSetup.setCanvasInteraction(canvas, canvasEl);
   return canvas;
 }
-
-// Graph container
-
-
-/** 
-function colorizeLinks() {
-
-    for (const linkId in graph.links) {
-        const link = graph.links[linkId];
-        if (!link) continue;
-        link.color = customLinkTypeColors[link.type] ?? "#ff0000";
-    }
-}
-
-const originalDrawConnections = LGraphCanvas.prototype.drawConnections;
-LGraphCanvas.prototype.drawConnections = function(ctx) {
-    colorizeLinks();
-    return originalDrawConnections.call(this, ctx);
-};
-
-
-Object.assign(LGraphCanvas.link_type_colors, customLinkTypeColors);
-
-
-colorizeLinks();
-*/
 

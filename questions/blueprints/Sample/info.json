@@ -1,0 +1,16 @@
+{
+    "uuid": "4d67c5ac-dfe0-4dc6-a434-dd991c7e5e77",
+    "title": "Sample Blueprints Question",
+    "topic": "Blueprints",
+    "tags": [
+        "code"
+    ],
+    "type": "v3",
+    "singleVariant": true,
+    "gradingMethod": "Internal",
+    "externalGradingOptions": {
+        "enabled": true,
+        "image": "prairielearn/grader-python",
+        "serverFilesCourse": ["graph"]
+    }
+}

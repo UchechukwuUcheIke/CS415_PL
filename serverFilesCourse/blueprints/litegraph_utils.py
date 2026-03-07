@@ -19,7 +19,7 @@ def to_litegraph_json(graph):
             "inputs": [
                 {
                     "name": pin.name, 
-                    "type": pin.pin_type.name, 
+                    "type": pin.pin_type.litegraph_data_type, 
                     "color": pin.pin_type.color,
                     "link_color": pin.pin_type.color,
                 }
@@ -28,7 +28,7 @@ def to_litegraph_json(graph):
             "outputs": [
                 {
                     "name": pin.name, 
-                    "type": pin.pin_type.name, 
+                    "type": pin.pin_type.litegraph_data_type, 
                     "color": pin.pin_type.color,
                     "link_color": pin.pin_type.color,
                     "links": []
@@ -112,12 +112,12 @@ def from_litegraph_json(litegraph):
     
     return g
 
-def generate_litegraph_registration_js():
+def generate_litegraph_registration_js(nodes_to_register = NODE_TYPES):
     """Generate JavaScript code to register all node types"""
     js_lines = []
 
     js_lines.append(f"function initializeDynamicNodes(BlueprintNode) {{")
-    for node_type in NODE_TYPES.values():
+    for node_type in nodes_to_register.values():
         func_name = node_type.type_name.replace("/", "_").title().replace("_", "")
         
         js_lines.append(f"function {func_name}() {{")
@@ -128,7 +128,7 @@ def generate_litegraph_registration_js():
             input_name = pin.name
             pin_type = pin.pin_type
             pin_shape = pin_type.shape
-            input_type = pin_type.name
+            input_type = pin_type.litegraph_data_type
             input_color = pin_type.color
             js_type = f"\"{input_type}\""
             js_lines.append(f"    this.addInput('{input_name}', {js_type})")
@@ -138,11 +138,17 @@ def generate_litegraph_registration_js():
             js_lines.append(f"    this.inputs[{idx}].color_off = '{input_color}';")
             js_lines.append(f"    this.inputs[{idx}].shape = {pin_shape};")
 
+            if (pin.widget_type is None):
+                continue
+
+            js_lines.append(f"this.addWidget('{pin.widget_type}','{input_name}','');")
+            js_lines.append(f"this.inputs[{idx}].widget = {{ name: '{input_name}' }};")
+
         for idx, pin in enumerate(node_type.outputs):
             output_name = pin.name
             pin_type = pin.pin_type
             pin_shape = pin_type.shape
-            output_type = pin_type.name
+            output_type = pin_type.litegraph_data_type
             output_color = pin_type.color
             js_type = f"\"{output_type}\""
             js_lines.append(f"    this.addOutput('{output_name}', {js_type});")

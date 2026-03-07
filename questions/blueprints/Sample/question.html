@@ -1,6 +1,6 @@
 <pl-question-panel>
+  {{ Boilerplate }}
   <script src="https://cdn.jsdelivr.net/npm/litegraph.js/build/litegraph.min.js"></script>
-
   <script>
     const initialGraph = {{{ params.initial_graph }}};
     const STORAGE_KEY = "{{{ params.storage_key }}}";
@@ -8,7 +8,8 @@
 
   <script src="{{ options.client_files_course_url }}/blueprints/blueprintnode.js"> </script>
 
-  {{This script segement loads all the nodetypes defined in nodetype.py into graph.js}}
+  {{This script segement allows server.py to inject javascript to the student's webpage.
+    Injected javascript contains the registered nodes for this question }}
   <script>
     {{{ params.node_registration_js }}}
   </script>
@@ -19,15 +20,19 @@
   <script src="{{ options.client_files_course_url }}/blueprints/graph_events.js" defer> </script>
   <script src="{{ options.client_files_course_url }}/blueprints/main.js" defer> </script>
 
-  <h3>Blueprint Graph Prototype</h3>
-  <pl-string-input answers-name="student_graph" size="80" display="block" allow-blank="true" ></pl-string-input>
+  <pl-markdown src="prompt.md"></pl-markdown>
+
+
   <div id="graph-container"
       style="width:100%; height:600px; background:#1e1e1e;">
   </div>
-
-<button type="button" id="reset-graph" class="btn btn-secondary">
-  Reset Graph
-</button>
+  {{We wrap the string input around a "display:none" div so the student cannot see it}}
+  <div id="hidden-input" style="display:none;">
+    <pl-string-input answers-name="student_graph" size="80" display="block" allow-blank="true"></pl-string-input>
+  </div>
+  <button type="button" id="reset-graph" class="btn btn-secondary">
+    Reset Graph
+  </button>
 
 </pl-question-panel>
 
