@@ -96,6 +96,15 @@ GraphEvents.attachCanvasEvents = function(canvas, graph)
     canvas.canvas.addEventListener("dblclick", (e) => {
         GraphEvents.handleDoubleClick(e, canvas, graph)
     });
+    
+    // Delete nodes on delete/backspace
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Delete" || e.key === "Backspace") {
+        for (let id in canvas.selected_nodes) {
+          graph.remove(canvas.selected_nodes[id]);
+        }
+      }
+    });
 }
 
 

@@ -1,0 +1,16 @@
+{
+    "uuid": "b752c877-45f3-40b1-9ee8-86ec24ce0f74",
+    "title": "Interactable Door",
+    "topic": "Blueprints",
+    "tags": [
+        "code"
+    ],
+    "type": "v3",
+    "singleVariant": true,
+    "gradingMethod": "Internal",
+    "externalGradingOptions": {
+        "enabled": true,
+        "image": "prairielearn/grader-python",
+        "serverFilesCourse": ["graph"]
+    }
+}

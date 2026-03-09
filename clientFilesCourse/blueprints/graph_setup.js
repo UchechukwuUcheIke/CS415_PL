@@ -15,6 +15,7 @@ GraphSetup.setUpLiteGraph = function()
   LiteGraph.NODE_DEFAULT_BOXCOLOR = "transparent";
   LiteGraph.BACKGROUND_COLOR = "#1e1e1e";
   LiteGraph.ROUND_RADIUS = 8;
+  LiteGraph.NODE_TITLE_COLOR = "#FFFFFF"; // title text
 }
 
 GraphSetup.createCanvas = function(graph)
@@ -33,6 +34,14 @@ GraphSetup.createCanvas = function(graph)
 
 GraphSetup.setCanvasColors = function(graph, canvas)
 {
+  const originalAdd = LGraph.prototype.add;
+  LGraph.prototype.add = function(node) {
+    originalAdd.apply(this, arguments);
+    if (node.computeSize) {
+      node.setSize(node.computeSize());
+    }
+  };
+
   canvas.background_color = "#1e1e1e";
 
   // NOTE: Only colors the link when newly connected currently

@@ -1,0 +1,20 @@
+from enum import Enum
+
+class UE5DataTypeColor(Enum):
+    WHITE           = "#FFFFFF"
+    DARK_RED        = "#8B0000"
+    TEAL_GREEN      = "#5CB85C"
+    DARK_GREEN      = "#006400"
+    LIGHT_GREEN     = "#A5D6A7"
+    JADE_GREEN      = "#00AE6A"
+    PINK            = "#F56D91"
+    LIGHT_PINK      = "#FF9999"
+    LAVENDER        = "#D7AFD7"
+    GOLD            = "#FFD700"
+    CORNFLOWER_BLUE = "#6495ED"
+    DARK_ORANGE     = "#FF8C00"
+    MAGENTA         = "#C700A5"
+    ROYAL_BLUE      = "#4169E1"
+    VIOLET          = "#9400D3"
+    OLIVE_YELLOW    = "#C8C800"
+    GREY            = "#808080"

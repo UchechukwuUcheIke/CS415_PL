@@ -10,6 +10,9 @@ BlueprintNode.initializeBlueprintNode = function()
 
     BlueprintNode.prototype = Object.create(LGraphNode.prototype);
     BlueprintNode.prototype.constructor = BlueprintNode;
+    BlueprintNode.title_color = "#FFFFFF";
+    BlueprintNode.title_text_color = "#FFFFFF";
+
 
     // Header + body drawing
     BlueprintNode.prototype.onDrawBackground = function(ctx) {
@@ -48,18 +51,17 @@ BlueprintNode.initializeBlueprintNode = function()
         let y;
 
         if (slotInfo.type === LiteGraph.EVENT) {
-            y = 38 + execIndex * 20;   // exec near top
+            y = 19 + execIndex * 10;   // exec near top
         } else {
-            y = 70 + dataIndex * 22;   // data lower
+            y = 35 + dataIndex * 11;   // data lower
         }
 
         return [x, y];
     };
 
     BlueprintNode.prototype.onResize = function() {
-        const total = (this.inputs?.length || 0) +
-                        (this.outputs?.length || 0);
-        this.size[1] = 100 + total * 22;
+        const slots = Math.max(this.inputs?.length || 0, this.outputs?.length || 0);
+        this.size[1] = 20 + slots * 22;
     };
 
     return BlueprintNode;

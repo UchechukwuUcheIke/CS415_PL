@@ -1,6 +1,5 @@
 from blueprints.graph import Graph
 from blueprints.node import Node
-from blueprints.node_type import NODE_TYPES
 
 def to_litegraph_json(graph):
     litegraph_nodes = []
@@ -112,18 +111,18 @@ def from_litegraph_json(litegraph):
     
     return g
 
-def generate_litegraph_registration_js(nodes_to_register = NODE_TYPES):
+def generate_litegraph_registration_js(nodes_to_register):
     """Generate JavaScript code to register all node types"""
     js_lines = []
 
     js_lines.append(f"function initializeDynamicNodes(BlueprintNode) {{")
-    for node_type in nodes_to_register.values():
+    for node_type in nodes_to_register:
         func_name = node_type.type_name.replace("/", "_").title().replace("_", "")
         
         js_lines.append(f"function {func_name}() {{")
         js_lines.append("    BlueprintNode.call(this);")
         js_lines.append(f"    this.title = '{node_type.title}';")
-        
+
         for idx, pin in enumerate(node_type.inputs):
             input_name = pin.name
             pin_type = pin.pin_type

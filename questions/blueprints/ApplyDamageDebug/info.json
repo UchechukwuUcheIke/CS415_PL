@@ -1,0 +1,16 @@
+{
+    "uuid": "8bb79796-96e9-41da-9449-9d9658a23208",
+    "title": "Apply Damage Debug",
+    "topic": "Blueprints",
+    "tags": [
+        "code"
+    ],
+    "type": "v3",
+    "singleVariant": true,
+    "gradingMethod": "Internal",
+    "externalGradingOptions": {
+        "enabled": true,
+        "image": "prairielearn/grader-python",
+        "serverFilesCourse": ["graph"]
+    }
+}

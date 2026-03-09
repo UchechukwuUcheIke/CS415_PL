@@ -68,5 +68,11 @@ PIN_TYPES = {
         "#9FFF3A", 
         Shape.CIRCLE
         ),
+    UE5DataType.VECTOR: PinType(
+        UE5DataType.VECTOR, 
+        LitegraphDataType.VECTOR, 
+        "#F6C320", 
+        Shape.CIRCLE
+        ),
     
 }
